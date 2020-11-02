@@ -8,13 +8,13 @@
 
 ## Problem Statement
 
-(text)
+The goal of this project is to predict the outcome for cats and dogs in an animal shelter based on features like their type, sex, age, breed, and color.
 
 ---
 
 ## Summary
 
-(text and visualizations)
+
 
 ---
 
