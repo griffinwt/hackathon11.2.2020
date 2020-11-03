@@ -19,7 +19,7 @@ The goal of this project is to predict the outcome for cats and dogs in an anima
 
 ## Summary
 
-Initial cleaning and EDA revealed a few interesting aspects in the data set. There were thousands of empty values in the name and outcome subytype columns, too many too drop, so I changed most of them to 'unnamed' and 'unknown' respectively. I also found that several names appear more frequently than others! Here is a table of the top 5 most frequent pet names in the animal shelter:
+Initial cleaning and EDA revealed a few interesting aspects in the data set. There were several thousand null values, most of which I adjusted to keep in the data set, only dropping about 50 of the 26,000+ rows. I also found that several names appear more frequently than others! Here is a table of the top 5 most frequent pet names in the animal shelter:
 
 | name    |   appearance |
 |:--------|-------:|
@@ -29,7 +29,7 @@ Initial cleaning and EDA revealed a few interesting aspects in the data set. The
 | Daisy   |    106 |
 | Lucy    |     94 |
 
-Another interesting facet was age distribution. Here is a histogram of age distribution among the animals in the shelter after converting all ages to the same units (days):
+The relationship between name and adoption is something else I would have liked to investigate further given more time. Another interesting facet was age distribution. Here is a histogram of age distribution among the animals in the shelter after converting all ages to the same units (days):
 
 <img src="./visualizations/ages.png" width="75%" height="75%">
 
@@ -48,10 +48,10 @@ Moving into the modeling phase, here is the target variable distribution:
 This means that my baseline accuracy would be 40%, i.e. predicting every animal as adopted would be correct roughly 40% of the time.  
 
 #### Random Forest Model:  
-A random forest model was my first idea to apply to this data set because the classification seemed ideal for a decision tree type system and random forest should one of the strongest applications of decision tree modeling. I had difficulty fighting the natural overfit that the random forest tends towards, eventually settling on a training score of 94% which generalized to a test score of 86%. With more time, I would have liked to narrow that gap further.  
+A random forest model was my first idea to apply to this data set because the classification seemed ideal for a decision tree type system and random forest should one of the strongest applications of decision tree modeling. I had difficulty fighting the natural overfit that the random forest tends towards, eventually settling on a training score of 66% which generalized to a test score of 51%. With more time, I would have liked to narrow that gap further.  
 
 #### KNN Model:  
-The K-nearest neighbors model seemed like a decent option in case my data did not prove linear. After a cross-validated grid search I scored 87% on my training split and 79% on the test split.  
+The K-nearest neighbors model seemed like a decent option in case my data did not prove linear. After a cross-validated grid search I scored 66% on my training split and 50% on the test split.  
 
 #### Logistic Regression Model:  
 In order to perform logistic regression, I had to map my y-values into a single column (below) rather than dummifying them.  
@@ -64,10 +64,14 @@ In order to perform logistic regression, I had to map my y-values into a single 
 | Euthanasia      |    4  |
 | Died            |    5 |
 
-This model took the longest to run and in fact I had to trim my hyperparameters more than I preferred in order to get it to resolve within the alotted time.
+This model took the longest to run and in fact I had to trim my hyperparameters far more than I preferred in order to get it to resolve within the alotted time. This model scored a disappointing ~51% on both training and test sets, with the only silver lining that at least it generalized well (low variance) even though the score was bad throughout (high bias).
 
-#### Adaboost Model:  
-My final model was an Adaboost Classifier which I hoped would give the best score.
+#### Linear Support Vector Model:  
+My final model was a Linear Support Vector Model. This model ran quickly and seemed to generalize best, consistently scoring near identically on both training and test sets with an accuracy of 63%.  
+
+Based on the coefficients from my best Support Vector Classifier, I was able to make a few general conclusions:  
+- An animal being spayed or neutered increased adoption chances by 1.3/1.2x; this was the strongest coefficient pointing towards adoption  
+- Pit Bulls had the strongest negative/inverse relationship to adoption and were the most likely breed to be euthanized
 
 ---
 
